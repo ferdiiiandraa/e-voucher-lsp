@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Monitor Voucher Asesi LSP LIK</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--tx:#1b1f24;--mu:#667085;--bd:#e2e5ea;--ac:#2563eb;--ok:#15803d;--okb:#dcfce7;--wn:#b45309;--wnb:#fef3c7;--er:#b91c1c;--erb:#fee2e2;--gr:#475467;--grb:#eaecf0;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111418;--card:#1a1f26;--tx:#eceff3;--mu:#98a2b3;--bd:#2d3540;--ac:#60a5fa;--ok:#4ade80;--okb:#14391f;--wn:#fbbf24;--wnb:#3d2f0a;--er:#f87171;--erb:#451a1a;--gr:#cbd2dc;--grb:#2d3540;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#111418;--card:#1a1f26;--tx:#eceff3;--mu:#98a2b3;--bd:#2d3540;--ac:#60a5fa;--ok:#4ade80;--okb:#14391f;--wn:#fbbf24;--wnb:#3d2f0a;--er:#f87171;--erb:#451a1a;--gr:#cbd2dc;--grb:#2d3540;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.w{max-width:960px;margin:0 auto;padding:16px}
+h1{font-size:20px;margin:0}h2{font-size:16px;margin:0 0 10px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.mu{color:var(--mu);font-size:13px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:12px}
+button,input,textarea,select{font:inherit;color:var(--tx)}
+button{background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:6px 12px;cursor:pointer}
+button.p{background:var(--ac);border-color:var(--ac);color:#fff}
+button.x{color:var(--er);padding:2px 8px}
+input,select{background:var(--bg);border:1px solid var(--bd);border-radius:8px;padding:7px 9px;width:100%}
+label{display:block;font-size:12px;color:var(--mu);margin-bottom:2px}
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;align-items:end}
+.vc{cursor:pointer}.vc.sel{outline:2px solid var(--ac)}
+.row{display:flex;justify-content:space-between;gap:8px;align-items:flex-start;flex-wrap:wrap}
+.badge{font-size:12px;font-weight:600;padding:2px 9px;border-radius:99px;white-space:nowrap}
+.ok{background:var(--okb);color:var(--ok)}.wn{background:var(--wnb);color:var(--wn)}.er{background:var(--erb);color:var(--er)}.gr{background:var(--grb);color:var(--gr)}
+.bar{height:10px;background:var(--grb);border-radius:99px;overflow:hidden;margin:8px 0 6px}
+.bar i{display:block;height:100%;background:var(--ok)}.bar i.wn{background:var(--wn)}.bar i.er{background:var(--er)}
+.st{display:flex;gap:18px;flex-wrap:wrap;font-size:14px}.st b{font-size:18px;display:block}
+.sc{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:480px}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--bd);font-size:14px;vertical-align:top}
+th{color:var(--mu);font-weight:600;font-size:12px}
+td.n,th.n{text-align:right}
+tr.over td{background:var(--erb)}
+.tabs{display:flex;gap:6px;margin-bottom:8px}.tabs button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+details summary{cursor:pointer;font-weight:600}
+.al{background:var(--erb);color:var(--er);border-radius:10px;padding:10px 12px;margin-bottom:12px;font-size:14px}
+.hero{background:linear-gradient(135deg,#1d4ed8,#6d28d9);color:#fff;border-radius:18px;padding:20px;margin-bottom:16px;box-shadow:0 8px 24px rgba(79,70,229,.28)}
+.hero h1{font-size:24px;letter-spacing:-.3px}.hero p{margin:4px 0 0;opacity:.85;font-size:14px}
+.hr{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start}
+.hero button{background:rgba(255,255,255,.18);color:#fff;border-color:rgba(255,255,255,.35);backdrop-filter:blur(4px)}
+.hero button:hover{background:rgba(255,255,255,.3)}
+.hs{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:16px}
+.hs div{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:12px;padding:10px 14px;font-size:12px;opacity:.95}
+.hs b{display:block;font-size:26px;line-height:1.2}
+.card{border-radius:16px;box-shadow:0 2px 10px rgba(16,24,40,.06)}
+.vc{border-left:6px solid var(--ok);transition:transform .15s,box-shadow .15s}
+.vc:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(16,24,40,.12)}
+.vc.s-wn{border-left-color:var(--wn)}.vc.s-er{border-left-color:var(--er)}.vc.s-gr{border-left-color:var(--mu)}
+.vc.sel{outline:2px solid var(--ac);outline-offset:1px}
+.vc b:first-child{font-size:17px}
+.bar{height:14px}.bar i{background:linear-gradient(90deg,#22c55e,#15803d);border-radius:99px}
+.bar i.wn{background:linear-gradient(90deg,#fbbf24,#d97706)}.bar i.er{background:linear-gradient(90deg,#f87171,#b91c1c)}
+.st{align-items:stretch}.st>div{background:var(--bg);border-radius:12px;padding:6px 16px;font-size:12px;color:var(--mu)}
+.st b{font-size:24px;color:var(--tx);line-height:1.2}
+.st .tr{margin-left:auto;align-self:center;background:transparent}
+.badge{font-size:13px;padding:4px 12px}
+.vc.s-ok{background:linear-gradient(135deg,rgba(34,197,94,.10),var(--card) 60%)}
+.vc.s-wn{background:linear-gradient(135deg,rgba(245,158,11,.14),var(--card) 60%)}
+.vc.s-er{background:linear-gradient(135deg,rgba(239,68,68,.14),var(--card) 60%)}
+.vc.s-gr{background:linear-gradient(135deg,rgba(100,116,139,.12),var(--card) 60%)}
+.st>div:nth-child(1){background:rgba(59,130,246,.14);color:var(--ac)}.st>div:nth-child(1) b{color:var(--ac)}
+.st>div:nth-child(2){background:rgba(34,197,94,.16);color:var(--ok)}.st>div:nth-child(2) b{color:var(--ok)}
+.s-wn .st>div:nth-child(2){background:rgba(245,158,11,.18);color:var(--wn)}.s-wn .st>div:nth-child(2) b{color:var(--wn)}
+.s-er .st>div:nth-child(2){background:rgba(239,68,68,.16);color:var(--er)}.s-er .st>div:nth-child(2) b{color:var(--er)}
+.s-gr .st>div:nth-child(2){background:rgba(100,116,139,.16);color:var(--gr)}.s-gr .st>div:nth-child(2) b{color:var(--gr)}
+.st>div:nth-child(3){background:rgba(139,92,246,.14);color:#8b5cf6}.st>div:nth-child(3) b{color:#8b5cf6}
+button.p{box-shadow:0 2px 6px rgba(37,99,235,.35)}
+</style>
+</head>
+<body>
+<div class="w">
+
+  <div id="alerts"></div>
+  <details class="card" id="addv">
+    <summary>+ Voucher baru</summary>
+    <div class="g" style="margin-top:10px">
+      <div><label>Klien</label><input id="vk"></div>
+      <div><label>Kode voucher (opsional)</label><input id="vc"></div>
+      <div><label>Kuota asesi</label><input id="vq" type="number" min="1" value="100"></div>
+      <div><label>Tanggal mulai / beli</label><input id="vm" type="date"></div>
+      <div><label>Berlaku (bulan)</label><input id="vb" type="number" min="1" value="3"></div>
+      <div><button class="p" onclick="addVoucher()">Simpan voucher</button></div>
+    </div>
+  </details>
+  <div id="list"></div>
+  <div id="detail"></div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 8px"><button onclick="exportXLSX()">⬇ Ekspor Excel</button><input type="file" id="imp" accept=".json" hidden></div>
+  <p class="mu">Data tersimpan di browser ini saja.</p>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+var KEY='vocAsesi2',S={v:[],sel:null,mode:'hari'};
+function load(){try{var r=localStorage.getItem(KEY);if(r){var d=JSON.parse(r);S.v=d.v||[]}}catch(e){}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify({v:S.v}))}catch(e){}}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function pd(s){var p=s.split('-');return new Date(+p[0],+p[1]-1,+p[2])}
+function fs(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function fmt(s){return pd(s).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})}
+function today(){return fs(new Date())}
+function addMonths(s,n){var d=pd(s);d.setMonth(d.getMonth()+n);d.setDate(d.getDate()-1);return fs(d)}
+function wk(s){var d=pd(s),k=(d.getDay()+6)%7;d.setDate(d.getDate()-k);return fs(d)}
+function used(v){return v.logs.reduce(function(a,l){return a+l.jml},0)}
+function days(v){return Math.round((pd(v.exp)-pd(today()))/864e5)}
+function info(v){
+  var u=used(v),s=v.kuota-u,p=u/v.kuota,d=days(v),c,t;
+  if(u>v.kuota){c='er';t='OVER KUOTA +'+(u-v.kuota)}
+  else if(s===0){c='gr';t='Habis'}
+  else if(d<0){c='gr';t='Kedaluwarsa (sisa '+s+' hangus)'}
+  else if(p>=0.8){c='wn';t='Hampir habis'}
+  else if(d<=14){c='wn';t='Segera berakhir'}
+  else{c='ok';t='Aman'}
+  return{u:u,s:s,p:p,d:d,c:c,t:t}
+}
+function addVoucher(){
+  var k=g('vk').value.trim(),q=+g('vq').value,m=g('vm').value||today(),b=+g('vb').value||3;
+  if(!k||!(q>0)){alert('Isi nama klien dan kuota.');return}
+  var v={id:uid(),klien:k,kode:g('vc').value.trim(),kuota:q,mulai:m,exp:addMonths(m,b),logs:[]};
+  S.v.push(v);S.sel=v.id;save();g('vk').value='';g('vc').value='';g('addv').open=false;render()
+}
+function g(i){return document.getElementById(i)}
+function pick(id){S.sel=id;render();setTimeout(function(){g('detail').scrollIntoView({behavior:'smooth',block:'start'})},60)}
+function delVoucher(id){if(confirm('Hapus voucher beserta seluruh riwayat pemakaiannya?')){S.v=S.v.filter(function(v){return v.id!==id});S.sel=null;save();render()}}
+function cur(){return S.v.filter(function(v){return v.id===S.sel})[0]}
+function addUse(){
+  var v=cur(),t=g('ut').value||today(),j=+g('uj').value,k=g('uk').value.trim();
+  if(!v||!(j>0)){alert('Isi jumlah asesi.');return}
+  var after=used(v)+j;
+  if(after>v.kuota&&!confirm('Pemakaian ini membuat total '+after+' dari kuota '+v.kuota+' (lebih '+(after-v.kuota)+'). Tetap catat?'))return;
+  v.logs.push({id:uid(),tgl:t,jml:j,ket:k});save();render()
+}
+function delUse(vid,lid){var v=cur();if(confirm('Hapus catatan ini?')){v.logs=v.logs.filter(function(l){return l.id!==lid});save();render()}}
+function sorted(v){return v.logs.slice().sort(function(a,b){return a.tgl<b.tgl?-1:a.tgl>b.tgl?1:0})}
+function render(){
+  var al=[];
+  S.v.forEach(function(v){var i=info(v);if(i.c==='er')al.push(v.klien+': pemakaian melebihi kuota sebanyak '+(i.u-v.kuota)+' asesi.');else if(i.c==='wn')al.push(v.klien+': '+i.t.toLowerCase()+' (sisa '+i.s+', '+(i.d<0?'sudah lewat':i.d+' hari lagi')+').')});
+  
+  
+  g('alerts').innerHTML=al.length?'<div class="al"><b>Perlu perhatian</b><br>'+al.map(esc).join('<br>')+'</div>':'';
+  g('list').innerHTML=S.v.length?S.v.map(function(v){
+    var i=info(v),w=Math.min(100,i.p*100);
+    return '<div class="card vc s-'+i.c+(v.id===S.sel?' sel':'')+'" onclick="pick(\''+v.id+'\')"><div class="row"><div><b>'+esc(v.klien)+'</b> <span class="mu">'+esc(v.kode)+'</span><div class="mu">'+fmt(v.mulai)+' – '+fmt(v.exp)+' · '+(i.d<0?'berakhir':i.d+' hari lagi')+'</div></div><span class="badge '+i.c+'">'+esc(i.t)+'</span></div><div class="bar"><i class="'+(i.c==='er'?'er':i.c==='wn'?'wn':'')+'" style="width:'+w+'%"></i></div><div class="st"><div><b>'+i.u+'</b>terpakai</div><div><b>'+Math.max(i.s,0)+'</b>sisa</div><div><b>'+v.kuota+'</b>kuota</div><button class="x tr" onclick="event.stopPropagation();delVoucher(\''+v.id+'\')">🗑 Hapus voucher</button></div></div>'
+  }).join(''):'<div class="card mu">Belum ada voucher. Klik “+ Voucher baru” untuk mulai.</div>';
+  var v=cur();
+  if(!v){g('detail').innerHTML='';return}
+  var run=0,rows=sorted(v).map(function(l){run+=l.jml;return{l:l,run:run}});
+  var lg=rows.slice().reverse().map(function(r){var o=r.run>v.kuota;return '<tr class="'+(o?'over':'')+'"><td>'+fmt(r.l.tgl)+'</td><td class="n">'+r.l.jml+'</td><td class="n">'+r.run+'</td><td class="n">'+(v.kuota-r.run)+'</td><td>'+esc(r.l.ket)+'</td><td><button class="x" onclick="delUse(\''+v.id+'\',\''+r.l.id+'\')">Hapus</button></td></tr>'}).join('')||'<tr><td colspan="6" class="mu">Belum ada pemakaian.</td></tr>';
+  var grp={},ord=[];
+  rows.forEach(function(r){var k=S.mode==='hari'?r.l.tgl:wk(r.l.tgl);if(!grp[k]){grp[k]={j:0,run:0,k:[]};ord.push(k)}grp[k].j+=r.l.jml;grp[k].run=r.run;if(r.l.ket)grp[k].k.push(r.l.jml+' – '+r.l.ket)});
+  var rk=ord.slice().reverse().map(function(k){var x=grp[k],lab=S.mode==='hari'?fmt(k):fmt(k)+' (minggu)';return '<tr class="'+(x.run>v.kuota?'over':'')+'"><td>'+lab+'</td><td class="n">'+x.j+'</td><td class="n">'+x.run+'</td><td class="n">'+(v.kuota-x.run)+'</td><td>'+esc(x.k.join('; '))+'</td></tr>'}).join('')||'<tr><td colspan="5" class="mu">Belum ada data.</td></tr>';
+  g('detail').innerHTML='<div class="card"><div class="row"><h2>Catat pemakaian – '+esc(v.klien)+'</h2><button class="x" onclick="delVoucher(\''+v.id+'\')">Hapus voucher</button></div><div class="g"><div><label>Tanggal pakai</label><input id="ut" type="date" value="'+today()+'"></div><div><label>Jumlah asesi</label><input id="uj" type="number" min="1"></div><div><label>Keterangan (mis. skema, lokasi)</label><input id="uk"></div><div><button class="p" onclick="addUse()">Tambah</button></div></div></div>'
+  +'<div class="card"><h2>Riwayat pemakaian</h2><div class="sc"><table><tr><th>Tanggal</th><th class="n">Asesi</th><th class="n">Kumulatif</th><th class="n">Sisa</th><th>Keterangan</th><th></th></tr>'+lg+'</table></div><div class="mu">Baris merah = sudah melewati kuota.</div></div>'
+}
+function dl(name,txt,type){var a=document.createElement('a');a.href='data:'+type+';charset=utf-8,'+encodeURIComponent(txt);a.download=name;document.body.appendChild(a);a.click();a.remove()}
+function ser(s){var p=s.split('-');return Math.round((Date.UTC(+p[0],+p[1]-1,+p[2])-Date.UTC(1899,11,30))/864e5)}
+function exportXLSX(){
+  if(!window.XLSX){alert('Library Excel belum termuat. Cek koneksi internet lalu coba lagi.');return}
+  var r=[['Klien','Kode Voucher','Tanggal Pakai','Jumlah Asesi','Kumulatif','Sisa Voucher','Keterangan']],sm=[['Klien','Kode Voucher','Kuota','Mulai','Berlaku s/d','Terpakai','Sisa','Status']];
+  S.v.forEach(function(v){var run=0,i=info(v);sm.push([v.klien,v.kode,v.kuota,ser(v.mulai),ser(v.exp),i.u,v.kuota-i.u,i.t]);sorted(v).forEach(function(l){run+=l.jml;r.push([v.klien,v.kode,ser(l.tgl),l.jml,run,v.kuota-run,l.ket])})});
+  var w1=XLSX.utils.aoa_to_sheet(r),w2=XLSX.utils.aoa_to_sheet(sm),k;
+  for(k=1;k<r.length;k++){w1['C'+(k+1)].z='dd mmm yyyy'}
+  for(k=1;k<sm.length;k++){w2['D'+(k+1)].z='dd mmm yyyy';w2['E'+(k+1)].z='dd mmm yyyy'}
+  w1['!cols']=[{wch:22},{wch:16},{wch:14},{wch:13},{wch:11},{wch:13},{wch:40}];
+  w2['!cols']=[{wch:22},{wch:16},{wch:8},{wch:14},{wch:14},{wch:10},{wch:8},{wch:28}];
+  var wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,w1,'Riwayat Pemakaian');XLSX.utils.book_append_sheet(wb,w2,'Ringkasan Voucher');
+  var a=document.createElement('a');a.href='data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,'+XLSX.write(wb,{bookType:'xlsx',type:'base64'});a.download='riwayat-voucher-asesi.xlsx';document.body.appendChild(a);a.click();a.remove()
+}
+function exportCSV(){
+  var r=[['Klien','Kode','Kuota','Berlaku s/d','Tanggal pakai','Jumlah asesi','Kumulatif','Sisa','Keterangan']];
+  S.v.forEach(function(v){var run=0;sorted(v).forEach(function(l){run+=l.jml;r.push([v.klien,v.kode,v.kuota,v.exp,l.tgl,l.jml,run,v.kuota-run,l.ket])})});
+  dl('voucher-asesi.csv',r.map(function(x){return x.map(function(c){return '"'+String(c).replace(/"/g,'""')+'"'}).join(',')}).join('\n'),'text/csv')
+}
+function backup(){dl('backup-voucher-asesi.json',JSON.stringify({v:S.v}),'application/json')}
+g('imp').onchange=function(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(){try{var d=JSON.parse(r.result);if(d.v&&confirm('Ganti semua data saat ini dengan data backup?')){S.v=d.v;S.sel=null;save();render()}}catch(x){alert('File tidak valid.')}};r.readAsText(f)};
+load();g('vm').value=today();render();
+</script>
+</body>
+</html>

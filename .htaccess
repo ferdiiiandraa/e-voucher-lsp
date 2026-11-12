@@ -1,0 +1,17 @@
+# Dipakai bila document root server mengarah ke folder project (bukan /public),
+# misalnya Laragon atau shared hosting yang tidak bisa mengubah document root.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Blokir akses langsung ke file sensitif
+    RewriteRule ^(\.env|\.git|composer\.(json|lock)|artisan|package\.json|phpunit\.xml) - [F,L,NC]
+    RewriteRule ^(app|bootstrap|config|database|lang|resources|routes|storage|tests|vendor)(/|$) - [F,L,NC]
+
+    # Teruskan semua request ke folder public
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>

@@ -55,7 +55,15 @@
             <h2>Every voucher,<br><span class="grad-text">under control.</span></h2>
             <p>Quota, validity, and usage. One dashboard.</p>
 
-            {{-- Ilustrasi tiket kupon bergaya garis (SVG, tanpa gambar) --}}
+            {{-- Ilustrasi tiket kupon bergaya garis (SVG, tanpa gambar): 2 lapis + parallax --}}
+            <div class="coupon-stage" id="couponStage">
+                <div class="c-layer c-back"><div class="c-float">
+                    <svg class="coupon coupon-ghost" viewBox="0 0 440 180" aria-hidden="true">
+                        <path d="M16 2H308A12 12 0 0 0 332 2H424A14 14 0 0 1 438 16V164A14 14 0 0 1 424 178H332A12 12 0 0 0 308 178H16A14 14 0 0 1 2 164V16A14 14 0 0 1 16 2Z"/>
+                        <line x1="320" y1="22" x2="320" y2="158"/>
+                    </svg>
+                </div></div>
+                <div class="c-layer c-front"><div class="c-float">
             <svg class="coupon" viewBox="0 0 440 180" role="img" aria-label="Voucher">
                 <defs>
                     <clipPath id="stubClip"><rect x="336" y="30" width="80" height="120"/></clipPath>
@@ -99,6 +107,8 @@
                     <path d="M238 66l8 8 16-17" class="s-check"/>
                 </g>
             </svg>
+                </div></div>
+            </div>
         </div>
 
         <p class="auth-hero-foot">&copy; {{ date('Y') }} NAS · E-Voucher</p>
@@ -175,6 +185,27 @@
     });
     // Saat kembali lewat tombol Back browser, tombol jangan tetap "loading"
     window.addEventListener('pageshow', () => { btn.classList.remove('is-loading'); btn.disabled = false; });
+
+    // Parallax halus: tiket mengikuti arah mouse (hanya perangkat dengan mouse)
+    const stage = document.getElementById('couponStage');
+    const hero = document.querySelector('.auth-hero');
+    if (stage && hero && matchMedia('(pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        let tx = 0, ty = 0, x = 0, y = 0, raf = 0;
+        const tick = () => {
+            x += (tx - x) * 0.08; y += (ty - y) * 0.08;
+            stage.style.setProperty('--px', x.toFixed(3));
+            stage.style.setProperty('--py', y.toFixed(3));
+            raf = (Math.abs(tx - x) > 0.001 || Math.abs(ty - y) > 0.001) ? requestAnimationFrame(tick) : 0;
+        };
+        const go = () => { if (!raf) raf = requestAnimationFrame(tick); };
+        hero.addEventListener('pointermove', e => {
+            const r = hero.getBoundingClientRect();
+            tx = (e.clientX - r.left) / r.width * 2 - 1;
+            ty = (e.clientY - r.top) / r.height * 2 - 1;
+            go();
+        });
+        hero.addEventListener('pointerleave', () => { tx = 0; ty = 0; go(); });
+    }
 })();
 </script>
 </body>

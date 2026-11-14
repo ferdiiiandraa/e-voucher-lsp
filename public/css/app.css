@@ -826,8 +826,26 @@ input::placeholder, textarea::placeholder { color: var(--muted); opacity: .7; }
 @keyframes shimmer { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
 @keyframes heroShift { 0%, 100% { background-position: 0% 0%, 100% 100%, 0% 50%; } 50% { background-position: 10% 20%, 80% 90%, 100% 50%; } }
 /* Tiket kupon line-art */
-.auth-hero-body > .coupon { animation: none; }
-.coupon { display: block; width: 100%; max-width: 420px; height: auto; margin-top: 40px; overflow: visible; transform: rotate(-3deg); }
+/* Panggung tiket: ukuran ikut tinggi layar (tidak disembunyikan), 2 lapis + parallax mouse */
+.auth-hero-body > .coupon-stage { animation: fadeUp .8s .3s cubic-bezier(.2,.7,.2,1) both; }
+.coupon-stage {
+    --px: 0; --py: 0;
+    position: relative; margin-top: clamp(20px, 5vh, 44px);
+    width: clamp(240px, calc((100vh - 360px) * 2.2), 440px); max-width: 100%;
+    aspect-ratio: 440 / 210; perspective: 900px;
+}
+.c-layer { position: absolute; left: 0; right: 0; top: 0; transition: transform .2s ease-out; will-change: transform; }
+.c-front { top: 26px; transform: translate3d(calc(var(--px) * 14px), calc(var(--py) * 10px), 0) rotateY(calc(var(--px) * 7deg)) rotateX(calc(var(--py) * -6deg)); }
+.c-back  { transform: translate3d(calc(44px + var(--px) * -10px), calc(var(--py) * -7px), 0) scale(.86); opacity: .5; }
+.c-float { animation: couponFloat 7s ease-in-out infinite; }
+.c-back .c-float { animation: couponFloatBack 9s ease-in-out infinite; }
+.coupon { display: block; width: 100%; height: auto; overflow: visible; }
+.c-front .coupon { transform: rotate(-3deg); filter: drop-shadow(0 18px 30px rgba(6,14,60,.35)); }
+.c-back .coupon { transform: rotate(5deg); }
+.coupon-ghost path { fill: rgba(255,255,255,.05); stroke: rgba(255,255,255,.45); stroke-width: 1.6; }
+.coupon-ghost line { stroke: rgba(255,255,255,.3); stroke-width: 1.4; stroke-dasharray: 3 6; stroke-linecap: round; }
+@keyframes couponFloat { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-12px) rotate(.8deg); } }
+@keyframes couponFloatBack { 0%, 100% { transform: translateY(-6px) rotate(0deg); } 50% { transform: translateY(8px) rotate(-1.2deg); } }
 .coupon-body {
     fill: rgba(255,255,255,.06); stroke: rgba(255,255,255,.75); stroke-width: 1.6;
     stroke-dasharray: 1; stroke-dashoffset: 1; animation: drawLine 1.6s .3s cubic-bezier(.65,0,.35,1) forwards;
@@ -849,7 +867,6 @@ input::placeholder, textarea::placeholder { color: var(--muted); opacity: .7; }
 @keyframes fadeIn { to { opacity: 1; } }
 @keyframes stamp { 0% { opacity: 0; transform: scale(1.6) rotate(-30deg); } 100% { opacity: .95; transform: scale(1) rotate(-14deg); } }
 @keyframes scan { 0% { opacity: 0; transform: translateY(0); } 15% { opacity: 1; } 70% { opacity: 1; transform: translateY(100px); } 80%, 100% { opacity: 0; transform: translateY(100px); } }
-@media (max-height: 640px) { .coupon { display: none; } }
 
 .auth-hero-foot { margin-top: auto; font-size: 12.5px; color: rgba(255,255,255,.65); }
 
@@ -911,7 +928,7 @@ input::placeholder, textarea::placeholder { color: var(--muted); opacity: .7; }
 }
 @media (prefers-reduced-motion: reduce) {
     .auth-panel, .blob, .auth-watermark, .auth-hero, .grad-text,
-    .auth-hero-body > *, .coupon *, .coupon-scan { animation: none !important; }
+    .auth-hero-body > *, .coupon *, .coupon-scan, .c-float { animation: none !important; }
     .coupon-body { stroke-dashoffset: 0; }
     .coupon-text, .coupon-barcode, .coupon-perf, .coupon-stamp { opacity: 1; }
     .coupon-stamp { transform: rotate(-14deg); }

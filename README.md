@@ -14,19 +14,19 @@ Data tersimpan di database MySQL dan **tersinkron otomatis** ke semua pengguna y
 | **Kelola** (`/kelola`) | Tambah/edit/hapus voucher, catat & hapus pemakaian, cari & filter status, ekspor Excel |
 | **Pengguna** (`/pengguna`) | Khusus admin: tambah pengguna, reset password, nonaktifkan/aktifkan, hapus pengguna |
 
-Akun awal: **`admin` / `admin12345`**. Segera ganti lewat menu avatar → *Ganti password*.
+Akun awal: **`admin` / `admin12345`**. Segera ganti lewat menu profil (kanan atas) → *Ganti password*.
 
 ## Struktur database
 
 | Tabel | Isi |
 |---|---|
-| `users` | Akun pengguna (`username`, `password`, `is_admin`, `is_active`) |
-| `vouchers` | Klien, kode, kuota, tanggal mulai, masa berlaku (bulan), tanggal berakhir, catatan |
-| `pemakaian` | Catatan pemakaian per voucher: tanggal, jumlah asesi, keterangan, dicatat oleh |
+| `users` | Akun pengguna (`name`, `username`, `avatar` foto profil, `password`, `is_admin`, `is_active`) |
+| `vouchers` | Klien, kode, no. WhatsApp (`telepon`), kuota, tanggal mulai, masa berlaku (bulan), tanggal berakhir, catatan |
+| `pemakaian` | Catatan per voucher: jenis (`pakai` / `koreksi`), tanggal, jumlah asesi, keterangan, dicatat oleh |
 | `app_state` | Nomor revisi data, dipakai untuk sinkronisasi realtime |
 | `sessions`, `cache`, `jobs`, … | Tabel bawaan Laravel |
 
-Skema ada di `database/migrations/`. File `database/voucher_lsp.sql` berisi dump siap impor (struktur + akun admin).
+Skema ada di `database/migrations/`. File `database/voucher_lsp.sql` berisi dump siap impor (struktur + akun admin); setelah impor jalankan `php artisan migrate --force` agar kolom terbaru ikut ditambahkan.
 
 ## Menjalankan di Laragon (lokal)
 
@@ -44,7 +44,7 @@ Skema ada di `database/migrations/`. File `database/voucher_lsp.sql` berisi dump
 
 2. **Buat database** di cPanel → *MySQL Databases*: buat database dan user, lalu beri user tersebut akses *ALL PRIVILEGES*.
 
-3. **Impor tabel** lewat phpMyAdmin → pilih database → *Import* → `database/voucher_lsp.sql`.
+3. **Impor tabel** lewat phpMyAdmin → pilih database → *Import* → `database/voucher_lsp.sql`, lalu (via SSH) `php artisan migrate --force` untuk menambah kolom terbaru.
    (Atau, jika hosting punya SSH: `php artisan migrate --seed --force`.)
 
 4. **Upload & ekstrak** zip ke folder di hosting. Pilih salah satu:
@@ -82,6 +82,8 @@ Skema ada di `database/migrations/`. File `database/voucher_lsp.sql` berisi dump
   - **Sisa kuota**: isi sisa yang benar. Selisihnya dicatat sebagai baris *Koreksi* di riwayat.
   - **Masa berlaku**: ubah tanggal berakhir secara langsung.
 - Masa berlaku default = tanggal mulai + N bulan − 1 hari. Tanggalnya bisa diubah manual di form voucher.
-- **WhatsApp**: isi *No. WhatsApp* saat membuat voucher, maka setelah disimpan WhatsApp terbuka dengan pesan berisi rincian voucher. Tombol **WhatsApp** di detail voucher mengirim info sisa terbaru. Penutup pesan diatur lewat `VOUCHER_WA_TTD`.
+- **WhatsApp**: isi *No. WhatsApp* di form voucher (format 08xx / 8xx / +62 diterima). Menyimpan voucher **tidak** membuka WhatsApp; pesan info voucher (sisa kuota & masa berlaku terbaru) baru dibuat saat tombol **Kirim info WA** di detail voucher diklik.
+- **Profil**: klik nama di kanan atas → *Profil saya* untuk ubah nama & upload foto (JPG/PNG/WEBP, maks. 2 MB). Foto disimpan di `public/uploads/avatars` (tidak ikut ke Git; folder harus bisa ditulis di hosting).
+- **Testing**: `php artisan test` (memakai database MySQL `voucher_lsp_test`, buat dulu bila belum ada).
 - Sinkronisasi memakai *polling* ringan: browser hanya menanyakan nomor revisi. Jika ada perubahan, yang dikirim hanya **ringkasan** tiap voucher (total terpakai & jumlah catatan) plus 8 aktivitas terbaru. Riwayat pemakaian lengkap tetap tersimpan di database, tapi baru diambil (`/data/riwayat`) saat sebuah voucher dibuka atau saat ekspor Excel. Cara ini berjalan di shared hosting tanpa layanan tambahan (WebSocket/Pusher).
 - Ekspor Excel memuat library dari CDN, jadi butuh koneksi internet.

@@ -16,6 +16,12 @@ return [
     'name' => env('APP_NAME', 'Laravel'),
 
     /*
+     | Unggah foto profil. Matikan (AVATAR_UPLOAD=false) di hosting yang disknya tidak
+     | permanen seperti Vercel; avatar lalu memakai huruf depan nama.
+     */
+    'avatar_upload' => (bool) env('AVATAR_UPLOAD', true),
+
+    /*
     |--------------------------------------------------------------------------
     | Application Environment
     |--------------------------------------------------------------------------

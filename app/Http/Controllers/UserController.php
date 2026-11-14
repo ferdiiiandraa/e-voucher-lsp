@@ -37,9 +37,12 @@ class UserController extends Controller
 
         $data = $request->validate([
             'name' => ['required', 'string', 'max:100'],
-            'username' => ['required', 'string', 'max:50', 'alpha_dash', 'unique:users,username'],
+            'username' => ['required', 'string', 'max:50', 'alpha_dash', 'unique:users,username', 'different:password'],
             'password' => ['required', Password::min(8)],
             'is_admin' => ['nullable', 'boolean'],
+        ], [
+            // Mencegah username tak sengaja terisi password (mis. oleh autofill browser)
+            'username.different' => 'Username tidak boleh sama dengan password.',
         ]);
         $data['is_admin'] = $request->boolean('is_admin');
         $data['is_active'] = true;

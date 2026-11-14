@@ -41,7 +41,9 @@ class AccountController extends Controller
         $old = $user->avatar;
         $avatar = $old;
 
-        if ($request->hasFile('avatar')) {
+        if (! config('app.avatar_upload')) {
+            // Hosting tanpa disk permanen (mis. Vercel): foto tidak disimpan, hanya nama yang diubah.
+        } elseif ($request->hasFile('avatar')) {
             File::ensureDirectoryExists($dir);
             $file = $request->file('avatar');
             $avatar = $user->id.'-'.Str::random(10).'.'.$file->extension();

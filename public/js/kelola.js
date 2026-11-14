@@ -89,7 +89,7 @@ function renderDetail() {
     // Riwayat dimuat terpisah (tidak ikut sinkronisasi) agar ringan
     const cached = LOGS.get(v.id);
     if (cached) renderLogs(v, cached.logs);
-    else $('#dLogs').innerHTML = '<tr><td colspan="9" class="empty">Memuat riwayat…</td></tr>';
+    else $('#dLogs').innerHTML = '<tr><td colspan="7" class="empty">Memuat riwayat…</td></tr>';
 
     if (!cached || cached.rev !== App.rev) {
         const id = v.id;
@@ -122,21 +122,19 @@ async function fetchLogs(ids) {
 const TRASH = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6M10 11v6M14 11v6"/></svg>';
 
 function renderLogs(v, logs) {
-    // Hitung kumulatif urut tanggal, tampilkan terbaru di atas
+    // Hitung sisa berjalan urut tanggal, tampilkan terbaru di atas
     let run = 0;
     const rows = logs.map(l => ({ l, run: (run += l.jumlah) })).reverse();
     $('#dLogs').innerHTML = rows.length ? rows.map(({ l, run }, n) => `
         <tr class="${run > v.kuota ? 'over' : ''}">
             <td class="c muted">${n + 1}</td>
             <td class="nowrap">${U.fmt(l.tanggal)}</td>
-            <td class="c">${l.jenis === 'koreksi' ? '<span class="badge b-info tag">Koreksi</span>' : '<span class="badge b-muted tag">Pemakaian</span>'}</td>
             <td class="c"><b>${l.jumlah < 0 ? '−' + U.num(-l.jumlah) : U.num(l.jumlah)}</b></td>
-            <td class="c">${U.num(run)}</td>
             <td class="c">${U.num(v.kuota - run)}</td>
-            <td class="log-ket">${U.esc(l.keterangan || '—')}</td>
+            <td class="log-ket">${l.jenis === 'koreksi' ? '<span class="badge b-info tag">Koreksi</span> ' : ''}${U.esc(l.keterangan || (l.jenis === 'koreksi' ? '' : '—'))}</td>
             <td class="muted nowrap">${U.esc(l.oleh || '—')}</td>
             <td class="c log-act"><button type="button" class="btn btn-sm btn-icon btn-ghost-danger" data-del-log="${l.id}" title="Hapus catatan" aria-label="Hapus catatan">${TRASH}</button></td>
-        </tr>`).join('') : '<tr><td colspan="9" class="empty">Belum ada pemakaian. Catat lewat form di atas.</td></tr>';
+        </tr>`).join('') : '<tr><td colspan="7" class="empty">Belum ada pemakaian. Catat lewat form di atas.</td></tr>';
 }
 
 function render() { renderList(App.vouchers); renderDetail(); }

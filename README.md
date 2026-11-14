@@ -75,7 +75,7 @@ Skema ada di `database/migrations/`. File `database/voucher_lsp.sql` berisi dump
 
 - Status voucher: **Over kuota** (pemakaian > kuota), **Habis**, **Kedaluwarsa**, **Kuota menipis**, **Segera berakhir**, **Aman**.
 - **Notifikasi** (ikon lonceng & kartu Beranda) ada 2 kategori:
-  - **Kuota**: sisa ≤ `VOUCHER_NOTIF_SISA` asesi (default 50) atau sudah over kuota.
+  - **Kuota**: sisa ≤ `VOUCHER_NOTIF_SISA` asesi (default 10) atau sudah over kuota.
   - **Masa berlaku**: berakhir dalam ≤ `VOUCHER_NOTIF_HARI` hari (default 30).
   Ubah angkanya di `.env`, lalu jalankan `php artisan config:clear`.
 - **Update sisa** (halaman Kelola → detail voucher) ada 2 kategori:

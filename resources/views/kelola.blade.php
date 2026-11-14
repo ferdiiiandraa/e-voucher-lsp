@@ -128,9 +128,7 @@
                             <tr>
                                 <th class="c">No</th>
                                 <th>Tanggal</th>
-                                <th class="c">Jenis</th>
                                 <th class="c">Asesi</th>
-                                <th class="c">Kumulatif</th>
                                 <th class="c">Sisa</th>
                                 <th>Keterangan</th>
                                 <th>Dicatat oleh</th>

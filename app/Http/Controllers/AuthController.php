@@ -29,14 +29,14 @@ class AuthController extends Controller
         if (RateLimiter::tooManyAttempts($key, 5)) {
             $detik = RateLimiter::availableIn($key);
             throw ValidationException::withMessages([
-                'username' => "Terlalu banyak percobaan. Coba lagi dalam {$detik} detik.",
+                'username' => "Too many attempts. Please try again in {$detik} seconds.",
             ]);
         }
 
         if (! Auth::attempt($data, $request->boolean('remember'))) {
             RateLimiter::hit($key, 60);
             throw ValidationException::withMessages([
-                'username' => 'Username atau password salah.',
+                'username' => 'Invalid username or password.',
             ]);
         }
 
@@ -45,7 +45,7 @@ class AuthController extends Controller
         if (! Auth::user()->is_active) {
             Auth::logout();
             throw ValidationException::withMessages([
-                'username' => 'Akun Anda telah dinonaktifkan. Hubungi admin.',
+                'username' => 'Your account has been deactivated. Please contact your administrator.',
             ]);
         }
 

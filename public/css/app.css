@@ -438,7 +438,7 @@ a.list-item:hover .li-title { color: var(--primary); }
 
 /* Riwayat pemakaian: tabel bergaris (header berlatar, garis antar sel) */
 .logs-wrap { margin: 0; padding: 0; border: 1px solid var(--border); border-radius: 10px; }
-.table-logs { min-width: 860px; border-collapse: separate; border-spacing: 0; }
+.table-logs { min-width: 680px; border-collapse: separate; border-spacing: 0; }
 .table-logs th, .table-logs td,
 .table-logs th:first-child, .table-logs td:first-child,
 .table-logs th:last-child, .table-logs td:last-child { padding: 10px 14px; }
@@ -499,7 +499,10 @@ input::placeholder, textarea::placeholder { color: var(--muted); opacity: .7; }
 .chip .count { opacity: .65; margin-left: 3px; }
 
 /* ---------- Manage layout ---------- */
-.manage { display: grid; grid-template-columns: 340px 1fr; gap: 20px; align-items: start; }
+.manage { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 20px; align-items: start; }
+/* Isi grid tidak boleh melebarkan kolom (mis. tabel riwayat yang lebar cukup di-scroll di dalam kartunya) */
+.manage > *, .grid-2 > *, .grid-users > *, .stats > *, .mini-stats > * { min-width: 0; }
+.main { min-width: 0; }
 .manage-list { position: sticky; top: 24px; padding: 16px; max-height: calc(100vh - 48px); display: flex; flex-direction: column; }
 .vlist { overflow-y: auto; margin: 0 -8px; padding: 0 8px; display: flex; flex-direction: column; gap: 4px; }
 .vitem {
@@ -693,7 +696,7 @@ input::placeholder, textarea::placeholder { color: var(--muted); opacity: .7; }
     .toolbar-search { max-width: none; }
 }
 
-.grid-users { display: grid; grid-template-columns: 1fr 340px; gap: 20px; align-items: start; }
+.grid-users { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 20px; align-items: start; }
 .inline-pop { position: relative; }
 .inline-pop summary { list-style: none; }
 .inline-pop summary::-webkit-details-marker { display: none; }
@@ -735,22 +738,202 @@ input::placeholder, textarea::placeholder { color: var(--muted); opacity: .7; }
 @keyframes toastIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
 /* ---------- Auth ---------- */
-.auth-body {
-    min-height: 100vh; display: grid; place-items: center;
-    background:
-        radial-gradient(1000px 500px at 10% -10%, color-mix(in srgb, var(--primary) 12%, transparent), transparent 60%),
-        radial-gradient(800px 400px at 110% 110%, color-mix(in srgb, var(--primary) 8%, transparent), transparent 60%),
-        var(--bg);
+.auth-body { min-height: 100vh; background: var(--bg); overflow-x: hidden; }
+.auth-split { position: relative; z-index: 1; min-height: 100vh; display: grid; grid-template-columns: minmax(420px, 1.05fr) 1fr; }
+
+/* ----- Latar animasi: aurora + centang NAS mengambang ----- */
+.auth-bg, .hero-anim { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.auth-bg { position: fixed; z-index: 0; }
+.blob { position: absolute; border-radius: 50%; filter: blur(60px); will-change: transform; }
+.auth-bg .blob { opacity: .55; }
+.auth-bg .b1 { width: 460px; height: 460px; right: -120px; top: -140px; background: color-mix(in srgb, var(--primary) 38%, transparent); animation: drift1 18s ease-in-out infinite; }
+.auth-bg .b2 { width: 380px; height: 380px; right: 22%; bottom: -160px; background: color-mix(in srgb, #38bdf8 40%, transparent); animation: drift2 22s ease-in-out infinite; }
+.auth-bg .b3 { width: 300px; height: 300px; right: 8%; top: 40%; background: color-mix(in srgb, #818cf8 34%, transparent); animation: drift3 26s ease-in-out infinite; }
+.hero-anim .blob { opacity: .5; }
+.hero-anim .b1 { width: 420px; height: 420px; left: -120px; top: 30%; background: #60a5fa; animation: drift2 20s ease-in-out infinite; }
+.hero-anim .b2 { width: 360px; height: 360px; right: -100px; top: -80px; background: #818cf8; animation: drift1 24s ease-in-out infinite; }
+
+.floater {
+    position: absolute; bottom: -60px; display: block; border-radius: 28%;
+    animation: rise linear infinite; will-change: transform, opacity;
 }
-.auth-wrap { width: 100%; max-width: 400px; padding: 24px 16px; }
-.auth-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow); padding: 32px 28px; }
-.auth-brand { text-align: center; margin-bottom: 24px; }
-.auth-brand .brand-mark { margin: 0 auto 14px; }
-.auth-brand h1 { font-size: 20px; }
-.auth-brand p { margin-top: 4px; }
-.auth-foot { text-align: center; font-size: 12.5px; margin-top: 18px; }
+.floater svg { width: 100%; height: 100%; display: block; }
+.auth-bg .floater { color: color-mix(in srgb, var(--primary) 22%, transparent); --tick: color-mix(in srgb, var(--surface) 85%, transparent); }
+.hero-anim .floater { color: rgba(255,255,255,.14); --tick: rgba(255,255,255,.55); }
+
+@keyframes rise {
+    0%   { transform: translateY(0) rotate(-10deg) scale(.9); opacity: 0; }
+    10%  { opacity: 1; }
+    85%  { opacity: 1; }
+    100% { transform: translateY(-115vh) rotate(25deg) scale(1.05); opacity: 0; }
+}
+@keyframes drift1 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-60px, 50px) scale(1.12); } }
+@keyframes drift2 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(70px, -40px) scale(.92); } }
+@keyframes drift3 { 0%, 100% { transform: translate(0, 0); } 33% { transform: translate(-50px, -30px); } 66% { transform: translate(30px, 40px); } }
+
+/* Watermark logo besar di panel biru */
+.auth-hero > .hero-anim { position: absolute; }
+.auth-hero > .auth-watermark {
+    position: absolute; right: -110px; bottom: -90px; opacity: .1; pointer-events: none;
+    animation: breathe 8s ease-in-out infinite;
+}
+.auth-watermark .nas-logo { display: block; }
+@keyframes breathe { 0%, 100% { transform: rotate(-12deg) scale(1); opacity: .08; } 50% { transform: rotate(-8deg) scale(1.05); opacity: .14; } }
+
+/* Logo NAS: centang tergambar saat halaman dibuka */
+.nas-logo { flex: none; filter: drop-shadow(0 6px 14px rgba(29,78,216,.35)); }
+.nas-check { stroke-dasharray: 48; stroke-dashoffset: 48; animation: draw .7s .25s cubic-bezier(.65,0,.35,1) forwards; }
+.auth-watermark .nas-check { animation: none; stroke-dashoffset: 0; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+
+/* Panel brand (kiri) */
+.auth-hero {
+    position: relative; overflow: hidden; color: #fff;
+    display: flex; flex-direction: column; gap: 32px; padding: 40px 48px;
+    background:
+        radial-gradient(600px 400px at 0% 0%, rgba(255,255,255,.16), transparent 60%),
+        radial-gradient(500px 500px at 100% 100%, rgba(10,20,80,.35), transparent 60%),
+        linear-gradient(150deg, #3b6cf6 0%, #2447c9 45%, #1a339b 75%, #2a3fb8 100%);
+    background-size: 140% 140%, 140% 140%, 200% 200%;
+    animation: heroShift 16s ease-in-out infinite;
+}
+.auth-hero::before { /* pola titik halus */
+    content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .18;
+    background-image: radial-gradient(rgba(255,255,255,.8) 1px, transparent 1px);
+    background-size: 22px 22px;
+    mask-image: linear-gradient(160deg, #000 0%, transparent 70%);
+}
+.auth-hero > * { position: relative; z-index: 1; }
+.auth-hero > .hero-anim, .auth-hero > .auth-watermark { z-index: 0; }
+.auth-hero-top { display: flex; align-items: center; gap: 12px; }
+.auth-hero-mark { display: grid; padding: 4px; border-radius: 18px; background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.28); backdrop-filter: blur(6px); }
+.auth-hero-mark .nas-logo { filter: none; }
+.auth-hero-name { display: flex; flex-direction: column; line-height: 1.1; font-weight: 800; font-size: 24px; letter-spacing: .02em; }
+.auth-hero-name small { font-size: 12.5px; font-weight: 500; letter-spacing: .04em; color: rgba(255,255,255,.75); margin-top: 3px; }
+.auth-hero-body { margin-top: auto; max-width: 480px; }
+.auth-hero-body > * { animation: fadeUp .8s cubic-bezier(.2,.7,.2,1) both; }
+.auth-hero-body > :nth-child(2) { animation-delay: .1s; }
+.auth-hero-body > :nth-child(3) { animation-delay: .2s; }
+.auth-hero-body h2 { color: #fff; font-size: clamp(32px, 3.4vw, 46px); line-height: 1.08; font-weight: 800; letter-spacing: -.035em; }
+.grad-text {
+    background: linear-gradient(90deg, #ffffff, #bfdbfe, #a5b4fc, #ffffff); background-size: 300% 100%;
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    animation: shimmer 8s ease-in-out infinite;
+}
+.auth-hero-body p { margin-top: 14px; font-size: 16px; color: rgba(255,255,255,.78); }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(74,222,128,.55); } 70% { box-shadow: 0 0 0 8px rgba(74,222,128,0); } 100% { box-shadow: 0 0 0 0 rgba(74,222,128,0); } }
+@keyframes shimmer { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+@keyframes heroShift { 0%, 100% { background-position: 0% 0%, 100% 100%, 0% 50%; } 50% { background-position: 10% 20%, 80% 90%, 100% 50%; } }
+/* Tiket kupon line-art */
+.auth-hero-body > .coupon { animation: none; }
+.coupon { display: block; width: 100%; max-width: 420px; height: auto; margin-top: 40px; overflow: visible; transform: rotate(-3deg); }
+.coupon-body {
+    fill: rgba(255,255,255,.06); stroke: rgba(255,255,255,.75); stroke-width: 1.6;
+    stroke-dasharray: 1; stroke-dashoffset: 1; animation: drawLine 1.6s .3s cubic-bezier(.65,0,.35,1) forwards;
+}
+.coupon-perf { stroke: rgba(255,255,255,.5); stroke-width: 1.4; stroke-dasharray: 3 6; stroke-linecap: round; }
+.coupon-text, .coupon-barcode, .coupon-perf { opacity: 0; animation: fadeIn .8s 1.3s ease-out forwards; }
+.coupon text { fill: #fff; font-family: inherit; }
+.c-label { font-size: 11px; font-weight: 600; letter-spacing: .22em; fill-opacity: .7; }
+.c-title { font-size: 24px; font-weight: 700; letter-spacing: -.01em; }
+.c-meta { font-size: 10.5px; font-weight: 600; letter-spacing: .14em; fill-opacity: .65; }
+.c-rule { stroke: rgba(255,255,255,.3); stroke-width: 1; stroke-dasharray: 2 4; }
+.coupon-barcode rect { fill: rgba(255,255,255,.8); }
+.coupon-scan { opacity: 0; animation: scan 4.5s 2.4s ease-in-out infinite; }
+.coupon-stamp { transform-box: fill-box; transform-origin: center; opacity: 0; animation: stamp .5s 1.9s cubic-bezier(.3,1.6,.5,1) forwards; }
+.s-ring-outer { fill: none; stroke: #86efac; stroke-width: 1.4; stroke-dasharray: 2 4; }
+.s-ring { fill: rgba(134,239,172,.12); stroke: #86efac; stroke-width: 2; }
+.s-check { fill: none; stroke: #bbf7d0; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+@keyframes drawLine { to { stroke-dashoffset: 0; } }
+@keyframes fadeIn { to { opacity: 1; } }
+@keyframes stamp { 0% { opacity: 0; transform: scale(1.6) rotate(-30deg); } 100% { opacity: .95; transform: scale(1) rotate(-14deg); } }
+@keyframes scan { 0% { opacity: 0; transform: translateY(0); } 15% { opacity: 1; } 70% { opacity: 1; transform: translateY(100px); } 80%, 100% { opacity: 0; transform: translateY(100px); } }
+@media (max-height: 640px) { .coupon { display: none; } }
+
+.auth-hero-foot { margin-top: auto; font-size: 12.5px; color: rgba(255,255,255,.65); }
+
+/* Form (kanan) */
+.auth-main { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 24px; }
+.auth-panel { width: 100%; max-width: 380px; animation: authIn .45s ease-out both; }
+.auth-head { margin-bottom: 28px; }
+.auth-head h1 { font-size: 26px; font-weight: 700; letter-spacing: -.02em; }
+.auth-head p { margin-top: 6px; font-size: 14.5px; }
+.auth-mobile-mark { display: none; align-items: center; justify-content: center; gap: 10px; margin-bottom: 18px; }
+.nas-word { font-size: 28px; font-weight: 800; letter-spacing: .02em; color: #2563eb; }
+.auth-help { margin-top: 20px; font-size: 13px; text-align: center; }
+.auth-foot { text-align: center; font-size: 12.5px; margin-top: 32px; display: none; }
+@keyframes authIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+.input-icon { position: relative; }
+.input-icon > svg { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+.input-icon input { height: 46px; padding-left: 42px; border-radius: 10px; }
+.input-icon input[type="password"], .input-icon input#password { padding-right: 46px; }
+.input-icon:focus-within > svg { color: var(--primary); }
+.pw-toggle {
+    position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+    width: 34px; height: 34px; display: grid; place-items: center;
+    border: 0; border-radius: 8px; background: transparent; color: var(--muted); cursor: pointer;
+}
+.pw-toggle:hover { background: var(--surface-2); color: var(--text); }
+.pw-toggle:focus-visible { outline: none; box-shadow: var(--ring); }
+.pw-toggle .eye-off, .pw-toggle[aria-pressed="true"] .eye-on { display: none; }
+.pw-toggle[aria-pressed="true"] .eye-off { display: block; }
+
+.btn-lg { height: 46px; border-radius: 10px; font-size: 15px; font-weight: 600; }
+#loginBtn { margin-top: 4px; box-shadow: 0 8px 20px -8px color-mix(in srgb, var(--primary) 70%, transparent); }
+#loginBtn .spinner {
+    display: none; width: 18px; height: 18px; border-radius: 50%;
+    border: 2px solid rgba(255,255,255,.4); border-top-color: #fff; animation: spin .7s linear infinite;
+}
+#loginBtn.is-loading .spinner { display: block; }
+#loginBtn.is-loading .btn-label { opacity: .85; }
+#loginBtn:disabled { opacity: 1; cursor: progress; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 900px) {
+    .auth-split { grid-template-columns: 1fr; }
+    .auth-hero { display: none; }
+    .auth-main { justify-content: flex-start; padding: 56px 20px 32px; }
+    .auth-panel {
+        background: color-mix(in srgb, var(--surface) 82%, transparent);
+        backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+        border: 1px solid var(--border); border-radius: 20px;
+        box-shadow: 0 20px 50px -20px rgba(15,23,42,.25); padding: 28px 22px;
+    }
+    .auth-head { text-align: center; }
+    .auth-mobile-mark { display: flex; }
+    .auth-bg .b1 { width: 340px; height: 340px; right: -140px; top: -120px; }
+    .auth-bg .b2 { width: 300px; height: 300px; left: -120px; right: auto; bottom: -100px; }
+    .auth-bg .b3 { width: 240px; height: 240px; right: -60px; top: 55%; }
+    .auth-head h1 { font-size: 22px; }
+    .auth-foot { display: block; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .auth-panel, .blob, .auth-watermark, .auth-hero, .grad-text,
+    .auth-hero-body > *, .coupon *, .coupon-scan { animation: none !important; }
+    .coupon-body { stroke-dashoffset: 0; }
+    .coupon-text, .coupon-barcode, .coupon-perf, .coupon-stamp { opacity: 1; }
+    .coupon-stamp { transform: rotate(-14deg); }
+    .floater { display: none; }
+    .nas-check { animation: none; stroke-dashoffset: 0; }
+}
 
 /* ---------- Responsive ---------- */
+/* Laptop / layar menengah (atau browser di-zoom): kolom lebih ramping */
+@media (max-width: 1360px) {
+    :root { --sidebar-w: 228px; }
+    .container { padding: 28px 24px 56px; }
+    .manage { grid-template-columns: 290px minmax(0, 1fr); gap: 16px; }
+    .grid-users { grid-template-columns: minmax(0, 1fr) 300px; gap: 16px; }
+    .form-grid { grid-template-columns: 1fr 1fr; }
+    .form-grid .span-2 { grid-column: 1 / -1; }
+    .form-grid .field-btn { grid-column: 1 / -1; }
+    .form-grid .field-btn .btn { width: 100%; }
+}
+@media (max-width: 1180px) {
+    .mini-stats { grid-template-columns: repeat(2, 1fr); }
+}
 @media (max-width: 1024px) {
     /* Sidebar disembunyikan → header ringkas di atas + tab bar di bawah */
     .sidebar, .topbar { display: none; }

@@ -99,13 +99,6 @@
                     <text x="378" y="150" class="c-meta" text-anchor="middle">2026</text>
                 </g>
                 <g clip-path="url(#stubClip)"><rect class="coupon-scan" x="336" y="30" width="80" height="10" fill="url(#scanG)"/></g>
-
-                {{-- Cap stempel centang NAS --}}
-                <g class="coupon-stamp">
-                    <circle cx="250" cy="66" r="34" class="s-ring-outer"/>
-                    <circle cx="250" cy="66" r="26" class="s-ring"/>
-                    <path d="M238 66l8 8 16-17" class="s-check"/>
-                </g>
             </svg>
                 </div></div>
             </div>

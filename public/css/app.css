@@ -859,13 +859,8 @@ input::placeholder, textarea::placeholder { color: var(--muted); opacity: .7; }
 .c-rule { stroke: rgba(255,255,255,.3); stroke-width: 1; stroke-dasharray: 2 4; }
 .coupon-barcode rect { fill: rgba(255,255,255,.8); }
 .coupon-scan { opacity: 0; animation: scan 4.5s 2.4s ease-in-out infinite; }
-.coupon-stamp { transform-box: fill-box; transform-origin: center; opacity: 0; animation: stamp .5s 1.9s cubic-bezier(.3,1.6,.5,1) forwards; }
-.s-ring-outer { fill: none; stroke: #86efac; stroke-width: 1.4; stroke-dasharray: 2 4; }
-.s-ring { fill: rgba(134,239,172,.12); stroke: #86efac; stroke-width: 2; }
-.s-check { fill: none; stroke: #bbf7d0; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
 @keyframes drawLine { to { stroke-dashoffset: 0; } }
 @keyframes fadeIn { to { opacity: 1; } }
-@keyframes stamp { 0% { opacity: 0; transform: scale(1.6) rotate(-30deg); } 100% { opacity: .95; transform: scale(1) rotate(-14deg); } }
 @keyframes scan { 0% { opacity: 0; transform: translateY(0); } 15% { opacity: 1; } 70% { opacity: 1; transform: translateY(100px); } 80%, 100% { opacity: 0; transform: translateY(100px); } }
 
 .auth-hero-foot { margin-top: auto; font-size: 12.5px; color: rgba(255,255,255,.65); }
@@ -930,8 +925,7 @@ input::placeholder, textarea::placeholder { color: var(--muted); opacity: .7; }
     .auth-panel, .blob, .auth-watermark, .auth-hero, .grad-text,
     .auth-hero-body > *, .coupon *, .coupon-scan, .c-float { animation: none !important; }
     .coupon-body { stroke-dashoffset: 0; }
-    .coupon-text, .coupon-barcode, .coupon-perf, .coupon-stamp { opacity: 1; }
-    .coupon-stamp { transform: rotate(-14deg); }
+    .coupon-text, .coupon-barcode, .coupon-perf { opacity: 1; }
     .floater { display: none; }
     .nas-check { animation: none; stroke-dashoffset: 0; }
 }

@@ -49,7 +49,6 @@
             <h2>Semua voucher</h2>
             <a href="{{ route('kelola') }}" class="btn btn-sm btn-soft">
                 Kelola voucher
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </a>
         </div>
         <div class="table-wrap">

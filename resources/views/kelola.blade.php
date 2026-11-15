@@ -23,16 +23,18 @@
     <div class="manage">
         {{-- Daftar voucher --}}
         <aside class="card manage-list">
-            <div class="search">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-                <input type="search" id="q" placeholder="Cari klien atau kode…" autocomplete="off">
-            </div>
-            <div class="chips" id="filters">
-                <button type="button" class="chip active" data-f="all">Semua</button>
-                <button type="button" class="chip" data-f="ok">Aman</button>
-                <button type="button" class="chip" data-f="warn">Perhatian</button>
-                <button type="button" class="chip" data-f="danger">Over</button>
-                <button type="button" class="chip" data-f="muted">Selesai</button>
+            <div class="list-tools">
+                <div class="search">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                    <input type="search" id="q" placeholder="Cari…" title="Cari berdasarkan nama klien atau kode" autocomplete="off">
+                </div>
+                <select id="filters" class="filter-select" aria-label="Filter status">
+                    <option value="all" data-label="Semua">Semua</option>
+                    <option value="ok" data-label="Aman">Aman</option>
+                    <option value="warn" data-label="Perhatian">Perhatian</option>
+                    <option value="danger" data-label="Over">Over</option>
+                    <option value="muted" data-label="Selesai">Selesai</option>
+                </select>
             </div>
             <div id="vlist" class="vlist"><div class="empty">Memuat…</div></div>
         </aside>

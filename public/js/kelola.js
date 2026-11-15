@@ -14,11 +14,10 @@ function renderList(vs) {
     // Jumlah per filter
     const counts = { all: items.length, ok: 0, warn: 0, danger: 0, muted: 0 };
     items.forEach(x => counts[x.i.c]++);
-    $$('#filters .chip').forEach(ch => {
-        const label = ch.textContent.replace(/\s*\d+$/, '');
-        ch.innerHTML = U.esc(label) + `<span class="count">${counts[ch.dataset.f]}</span>`;
-        ch.classList.toggle('active', ch.dataset.f === S.f);
-    });
+    const sel = $('#filters');
+    [...sel.options].forEach(o => { o.textContent = o.dataset.label; o.title = `${counts[o.value]} voucher`; });
+    sel.value = S.f;
+    sel.classList.toggle('is-active', S.f !== 'all');
 
     const q = S.q.toLowerCase();
     const shown = items
@@ -347,10 +346,8 @@ $('#vlist').addEventListener('click', e => {
 
 $('#q').addEventListener('input', e => { S.q = e.target.value.trim(); renderList(App.vouchers); });
 
-$('#filters').addEventListener('click', e => {
-    const ch = e.target.closest('.chip');
-    if (!ch) return;
-    S.f = ch.dataset.f;
+$('#filters').addEventListener('change', e => {
+    S.f = e.target.value;
     renderList(App.vouchers);
 });
 

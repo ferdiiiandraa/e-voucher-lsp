@@ -190,6 +190,27 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .page-head .actions { flex: none; }
 
+/* Beranda: aksen warna pada sapaan */
+.page-head-accent {
+    position: relative; isolation: isolate; border-bottom: 0; padding-bottom: 22px;
+}
+.page-head-accent::after { /* garis bawah bergradasi */
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; border-radius: 99px;
+    background: linear-gradient(90deg, var(--primary) 0%, #38bdf8 35%, #818cf8 65%, color-mix(in srgb, #818cf8 0%, transparent) 100%);
+    opacity: .85;
+}
+.page-head-accent::before { /* cahaya warna lembut di latar */
+    content: ""; position: absolute; z-index: -1; left: -40px; top: -60px; width: 420px; height: 200px; border-radius: 50%;
+    background: radial-gradient(closest-side, color-mix(in srgb, var(--primary) 14%, transparent), transparent);
+    pointer-events: none;
+}
+.date-chip {
+    display: inline-flex; align-items: center; gap: 7px; padding: 4px 10px; border-radius: 99px;
+    background: var(--primary-soft); color: var(--primary); letter-spacing: .05em;
+}
+.date-chip::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--primary); }
+.page-head-accent h1 { margin-top: 6px; }
+
 /* ---------- Buttons ---------- */
 .btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 7px;

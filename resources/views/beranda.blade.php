@@ -3,9 +3,9 @@
 @section('title', 'Beranda')
 
 @section('content')
-    <div class="page-head">
+    <div class="page-head page-head-accent">
         <div class="page-head-text">
-            <p class="eyebrow" id="todayLabel"></p>
+            <p class="eyebrow date-chip"><span id="todayLabel"></span></p>
             <h1>Halo, {{ auth()->user()->name }}</h1>
             <p class="muted">Ringkasan pemakaian voucher asesi, diperbarui otomatis.</p>
         </div>
@@ -47,7 +47,10 @@
     <section class="card">
         <div class="card-head">
             <h2>Semua voucher</h2>
-            <a href="{{ route('kelola') }}" class="link">Buka halaman kelola →</a>
+            <a href="{{ route('kelola') }}" class="btn btn-sm btn-soft">
+                Kelola voucher
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
         </div>
         <div class="table-wrap">
             <table class="table table-overview">

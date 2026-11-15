@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sign in · {{ config('app.name') }}</title>
+    <title>Masuk · {{ config('app.name') }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -112,8 +112,8 @@
         <div class="auth-panel">
             <div class="auth-head">
                 <span class="auth-mobile-mark">{!! $nas(40, 'm') !!}<span class="nas-word">NAS</span></span>
-                <h1>Sign in</h1>
-                <p class="muted">Welcome back. Enter your account details.</p>
+                <h1>Masuk</h1>
+                <p class="muted">Selamat datang kembali. Silakan masuk ke akun Anda.</p>
             </div>
 
             <form method="POST" action="{{ url('/login') }}" class="stack" id="loginForm">
@@ -126,7 +126,7 @@
                     <label for="username">Username</label>
                     <div class="input-icon">
                         {!! $ic('<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>') !!}
-                        <input id="username" name="username" value="{{ old('username') }}" autocomplete="username" placeholder="Enter your username" autofocus required>
+                        <input id="username" name="username" value="{{ old('username') }}" autocomplete="username" placeholder="Masukkan username" autofocus required>
                     </div>
                 </div>
 
@@ -134,8 +134,8 @@
                     <label for="password">Password</label>
                     <div class="input-icon">
                         {!! $ic('<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>') !!}
-                        <input id="password" type="password" name="password" autocomplete="current-password" placeholder="Enter your password" required>
-                        <button type="button" class="pw-toggle" id="pwToggle" aria-label="Show password" aria-pressed="false">
+                        <input id="password" type="password" name="password" autocomplete="current-password" placeholder="Masukkan password" required>
+                        <button type="button" class="pw-toggle" id="pwToggle" aria-label="Tampilkan password" aria-pressed="false">
                             <svg class="eye-on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
                             <svg class="eye-off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.9 17.9A10.4 10.4 0 0 1 12 19c-6.5 0-10-7-10-7a18 18 0 0 1 4.1-5M9.9 5.2A9.6 9.6 0 0 1 12 5c6.5 0 10 7 10 7a18 18 0 0 1-2.2 3.2M14.1 14.1a3 3 0 1 1-4.2-4.2M3 3l18 18"/></svg>
                         </button>
@@ -143,16 +143,16 @@
                 </div>
 
                 <label class="check">
-                    <input type="checkbox" name="remember" value="1" @checked(old('remember'))> Remember me
+                    <input type="checkbox" name="remember" value="1" @checked(old('remember'))> Ingat saya
                 </label>
 
                 <button type="submit" class="btn btn-primary btn-block btn-lg" id="loginBtn">
-                    <span class="btn-label">Sign in</span>
+                    <span class="btn-label">Masuk</span>
                     <span class="spinner" aria-hidden="true"></span>
                 </button>
             </form>
 
-            <p class="auth-help muted">Forgot your password? Contact your administrator.</p>
+            <p class="auth-help muted">Lupa password? Hubungi admin.</p>
         </div>
         <p class="auth-foot muted">&copy; {{ date('Y') }} NAS · E-Voucher</p>
     </main>
@@ -166,7 +166,7 @@
         const show = pw.type === 'password';
         pw.type = show ? 'text' : 'password';
         t.setAttribute('aria-pressed', show);
-        t.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+        t.setAttribute('aria-label', show ? 'Sembunyikan password' : 'Tampilkan password');
         pw.focus();
     });
 

@@ -21,7 +21,7 @@ class EnsureUserIsActive
             $request->session()->invalidate();
             $request->session()->regenerateToken();
 
-            $pesan = 'Your account has been deactivated. Please contact your administrator.';
+            $pesan = 'Akun Anda telah dinonaktifkan. Hubungi admin.';
 
             if ($request->expectsJson()) {
                 return response()->json(['message' => $pesan], 401);

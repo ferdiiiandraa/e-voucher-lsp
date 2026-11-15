@@ -1,5 +1,5 @@
 /* =========================================================
-   Halaman Login: foto latar penuh + kartu form putih di tengah
+   Halaman Login: foto latar terang + kartu kaca putih di tengah
    ========================================================= */
 *, *::before, *::after { box-sizing: border-box; }
 html, body { height: 100%; }
@@ -9,21 +9,22 @@ body.lg-body {
     font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     font-size: 15px;
     color: #0f172a;
-    background: #1d3f99;
+    background: #f6f7f9;
     -webkit-font-smoothing: antialiased;
 }
 
-/* ---------- Foto latar + lapisan biru NAS ---------- */
-.lg-bg { position: fixed; inset: 0; z-index: 0; overflow: hidden; background: #1d3f99; }
+/* ---------- Foto latar + lapisan putih (senada dengan aplikasi) ---------- */
+.lg-bg { position: fixed; inset: 0; z-index: 0; overflow: hidden; background: #f6f7f9; }
 .lg-bg::before { /* foto zoom pelan */
     content: ""; position: absolute; inset: -4%;
     background: url("../img/login-photo.jpg") center / cover no-repeat;
+    filter: saturate(.95);
     animation: kenburns 32s ease-in-out infinite alternate;
 }
 @keyframes kenburns { from { transform: scale(1) translate(0, 0); } to { transform: scale(1.1) translate(-1.5%, -1%); } }
 .lg-bg::after {
     content: ""; position: absolute; inset: 0;
-    background: linear-gradient(180deg, rgba(15, 37, 105, .55) 0%, rgba(18, 44, 120, .62) 50%, rgba(15, 37, 105, .82) 100%);
+    background: linear-gradient(180deg, rgba(246, 247, 249, .6) 0%, rgba(246, 247, 249, .22) 22%, rgba(246, 247, 249, .28) 55%, rgba(246, 247, 249, .6) 100%);
 }
 
 .lg-page {
@@ -33,10 +34,11 @@ body.lg-body {
 }
 
 /* ---------- Bilah atas ---------- */
-.lg-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; color: #fff; }
+.lg-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; color: #0f172a; }
 .lg-brand { display: inline-flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 800; letter-spacing: .02em; }
-.lg-brand small { font-size: 14px; font-weight: 500; letter-spacing: 0; opacity: .85; }
-.lg-brand-mark { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 11px; background: #fff; }
+.lg-brand small { font-size: 14px; font-weight: 500; letter-spacing: 0; color: #334155; }
+.lg-brand, .lg-foot { text-shadow: 0 1px 8px rgba(255, 255, 255, .8); }
+.lg-brand-mark { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 11px; background: #fff; box-shadow: 0 4px 12px rgba(15, 23, 42, .1); }
 .lg-top-note { font-size: 14px; color: rgba(255,255,255,.8); }
 
 /* ---------- Kartu kaca ---------- */
@@ -59,11 +61,11 @@ body.lg-body {
 .lg-card {
     position: relative; overflow: hidden;
     padding: 36px 36px 30px;
-    color: #fff;
+    color: #0f172a;
     border-radius: 22px;
-    background: linear-gradient(145deg, rgba(255,255,255,.18), rgba(255,255,255,.06));
-    border: 1px solid rgba(255,255,255,.24);
-    box-shadow: 0 30px 70px rgba(5, 15, 50, .45), inset 0 1px 0 rgba(255,255,255,.25);
+    background: linear-gradient(145deg, rgba(255,255,255,.74), rgba(255,255,255,.52));
+    border: 1px solid rgba(255,255,255,.95);
+    box-shadow: 0 30px 70px rgba(15, 23, 42, .16), 0 2px 6px rgba(15, 23, 42, .05), inset 0 1px 0 #fff;
     backdrop-filter: blur(22px) saturate(150%);
     -webkit-backdrop-filter: blur(22px) saturate(150%);
     transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
@@ -72,7 +74,7 @@ body.lg-body {
 /* pantulan cahaya mengikuti mouse */
 .lg-shine {
     position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
-    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), rgba(255,255,255,.16), transparent 55%);
+    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), rgba(47, 91, 234, .07), transparent 55%);
     opacity: 0; transition: opacity .4s;
 }
 .lg-card.is-lit .lg-shine { opacity: 1; }
@@ -96,51 +98,51 @@ body.lg-body {
 @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 
 .lg-logo { display: flex; justify-content: center; margin-bottom: 18px; }
-.lg-logo svg { filter: drop-shadow(0 10px 22px rgba(29, 78, 216, .55)); }
+.lg-logo svg { filter: drop-shadow(0 10px 20px rgba(29, 78, 216, .3)); }
 .nas-check { stroke-dasharray: 48; stroke-dashoffset: 48; animation: tick .7s .7s cubic-bezier(.65,0,.35,1) forwards; }
 .lg-brand .nas-check { animation-delay: .2s; }
 @keyframes tick { to { stroke-dashoffset: 0; } }
 
-.lg-card h1 { margin: 0; text-align: center; font-size: 26px; font-weight: 700; letter-spacing: -.02em; color: #fff; }
-.lg-sub { margin: 6px 0 26px; text-align: center; color: rgba(255,255,255,.72); }
+.lg-card h1 { margin: 0; text-align: center; font-size: 26px; font-weight: 700; letter-spacing: -.02em; color: #0f172a; }
+.lg-sub { margin: 6px 0 26px; text-align: center; color: #64748b; }
 
 .lg-alert {
     margin-bottom: 18px; padding: 11px 14px; border-radius: 10px; font-size: 14px;
-    background: rgba(239, 68, 68, .18); border: 1px solid rgba(252, 165, 165, .45); color: #fee2e2;
+    background: #fdecec; border: 1px solid #f6cccc; color: #b42318;
 }
 
 .lg-field { margin-bottom: 18px; }
-.lg-field label { display: block; margin-bottom: 7px; font-size: 14px; font-weight: 600; color: rgba(255,255,255,.88); transition: color .2s; }
-.lg-field:focus-within label { color: #bcd4ff; }
+.lg-field label { display: block; margin-bottom: 7px; font-size: 14px; font-weight: 600; color: #334155; transition: color .2s; }
+.lg-field:focus-within label { color: #2f5bea; }
 .lg-input { position: relative; }
 .lg-input input {
     width: 100%; height: 48px; padding: 0 44px 0 15px;
-    font: inherit; color: #fff;
-    background: rgba(255,255,255,.08);
-    border: 1px solid rgba(255,255,255,.2); border-radius: 12px;
+    font: inherit; color: #0f172a;
+    background: rgba(255,255,255,.75);
+    border: 1px solid #d4d9e1; border-radius: 12px;
     outline: none; transition: border-color .2s, box-shadow .2s, background .2s;
 }
-.lg-input input::placeholder { color: rgba(255,255,255,.45); }
-.lg-input input:hover { border-color: rgba(255,255,255,.35); }
-.lg-input input:focus { background: rgba(255,255,255,.13); border-color: #8db4ff; box-shadow: 0 0 0 4px rgba(90, 160, 255, .25); }
-.lg-input input:-webkit-autofill { -webkit-text-fill-color: #fff; transition: background-color 9999s; }
+.lg-input input::placeholder { color: #94a3b8; }
+.lg-input input:hover { border-color: #b8c0cc; }
+.lg-input input:focus { background: #fff; border-color: #2f5bea; box-shadow: 0 0 0 4px rgba(47, 91, 234, .14); }
+.lg-input input:-webkit-autofill { -webkit-text-fill-color: #0f172a; transition: background-color 9999s; }
 
 .pw-toggle {
     position: absolute; right: 7px; top: 50%; transform: translateY(-50%);
     display: grid; place-items: center; width: 34px; height: 34px;
-    padding: 0; border: 0; border-radius: 8px; background: none; color: rgba(255,255,255,.7); cursor: pointer;
+    padding: 0; border: 0; border-radius: 8px; background: none; color: #64748b; cursor: pointer;
     transition: color .15s, background .15s;
 }
-.pw-toggle:hover { color: #fff; background: rgba(255,255,255,.12); }
-.pw-toggle:focus-visible { outline: 2px solid #8db4ff; outline-offset: 1px; }
+.pw-toggle:hover { color: #0f172a; background: #f1f3f6; }
+.pw-toggle:focus-visible { outline: 2px solid #2f5bea; outline-offset: 1px; }
 .pw-toggle .eye-off { display: none; }
 .pw-toggle[aria-pressed="true"] .eye-on { display: none; }
 .pw-toggle[aria-pressed="true"] .eye-off { display: block; }
 
-.lg-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 4px 0 24px; font-size: 14px; color: rgba(255,255,255,.85); }
+.lg-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 4px 0 24px; font-size: 14px; color: #334155; }
 .lg-check { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
-.lg-check input { width: 16px; height: 16px; margin: 0; accent-color: #5aa0ff; cursor: pointer; }
-.lg-hint { color: rgba(255,255,255,.62); }
+.lg-check input { width: 16px; height: 16px; margin: 0; accent-color: #2f5bea; cursor: pointer; }
+.lg-hint { color: #64748b; }
 
 .lg-btn {
     position: relative; overflow: hidden;
@@ -149,7 +151,7 @@ body.lg-body {
     font: inherit; font-weight: 600; color: #fff;
     background: linear-gradient(135deg, #5aa0ff, #2f5bea 60%, #1d4ed8);
     border: 0; border-radius: 12px; cursor: pointer;
-    box-shadow: 0 12px 28px rgba(29, 78, 216, .45), inset 0 1px 0 rgba(255,255,255,.3);
+    box-shadow: 0 10px 24px rgba(29, 78, 216, .28), inset 0 1px 0 rgba(255,255,255,.3);
     transition: transform .15s, box-shadow .2s;
 }
 .lg-btn::after { /* kilau melintas saat disorot */
@@ -157,10 +159,10 @@ body.lg-body {
     background: linear-gradient(100deg, transparent, rgba(255,255,255,.35), transparent);
     transform: skewX(-20deg); transition: left .6s ease;
 }
-.lg-btn:hover { transform: translateY(-1px); box-shadow: 0 16px 34px rgba(29, 78, 216, .55), inset 0 1px 0 rgba(255,255,255,.3); }
+.lg-btn:hover { transform: translateY(-1px); box-shadow: 0 14px 30px rgba(29, 78, 216, .36), inset 0 1px 0 rgba(255,255,255,.3); }
 .lg-btn:hover::after { left: 120%; }
 .lg-btn:active { transform: translateY(0) scale(.99); }
-.lg-btn:focus-visible { outline: 2px solid #bcd4ff; outline-offset: 2px; }
+.lg-btn:focus-visible { outline: 2px solid #2f5bea; outline-offset: 2px; }
 .lg-btn:disabled { cursor: progress; }
 .lg-btn .spinner {
     display: none; width: 16px; height: 16px; border-radius: 50%;
@@ -169,7 +171,7 @@ body.lg-body {
 .lg-btn.is-loading .spinner { display: block; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-.lg-foot { margin: 0; text-align: center; font-size: 13px; color: rgba(255,255,255,.7); }
+.lg-foot { margin: 0; text-align: center; font-size: 13px; font-weight: 500; color: #334155; }
 
 /* ---------- HP ---------- */
 @media (max-width: 640px) {
